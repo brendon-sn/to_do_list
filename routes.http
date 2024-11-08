@@ -1,0 +1,32 @@
+POST http://localhost:3333/tasks
+Content-type: application/json
+
+{
+    "name": "Tarefa 03",
+    "cost": 900,
+    "deadline": "2025-10-19T00:00:00.000Z"
+}
+
+### 
+
+
+GET http://localhost:3333/tasks
+
+
+### 
+
+
+PUT http://localhost:3333/tasks/e9c791a2-9c76-4417-ba35-d5aa71fdb489
+Content-type: application/json
+
+{
+    "name": "tarefa 02",
+    "cost": 11900,
+    "deadline": "2024-10-19"
+}
+
+### 
+
+
+DELETE http://localhost:3333/tasks/178998
+
