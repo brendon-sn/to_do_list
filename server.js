@@ -1,9 +1,14 @@
 import { fastify } from 'fastify'
 import { DatabasePostgres } from './db-postgres.js'
+import fastifyCors from '@fastify/cors' 
 
 const server = fastify()
-
 const database = new DatabasePostgres()
+
+server.register(fastifyCors, {
+    origin: ['https://front-to-do-list-psi.vercel.app'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+})
 
 server.post('/tasks', async (req, reply) => {
     const { name, cost, deadline } = req.body
@@ -19,9 +24,7 @@ server.post('/tasks', async (req, reply) => {
 
 server.get('/tasks', async (req) => {
     const search = req.query.search
-
     const tasks = await database.list(search)
-
     return tasks
 })
 
