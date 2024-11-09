@@ -10,13 +10,12 @@ const server = fastify({
 // Inicializa a conexão com o banco de dados
 const database = new DatabasePostgres()
 
-// Middleware para adicionar cabeçalhos CORS manualmente
+// Middleware para adicionar cabeçalhos CORS manualmente em todas as respostas
 server.addHook('onSend', async (request, reply, payload) => {
   reply.header('Access-Control-Allow-Origin', '*') // Permite todas as origens
   reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS') // Métodos permitidos
   reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Cabeçalhos permitidos
   reply.header('Access-Control-Allow-Credentials', 'true') // Permite credenciais
-
   return payload
 })
 
@@ -27,7 +26,7 @@ server.options('*', async (req, reply) => {
     .header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     .header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     .header('Access-Control-Allow-Credentials', 'true')
-    .status(204)
+    .status(204) // No Content
     .send()
 })
 
@@ -98,7 +97,7 @@ const start = async () => {
       host: '0.0.0.0',
       port: process.env.PORT ? parseInt(process.env.PORT, 10) : 3333,
     })
-    server.log.info(`Servidor rodando em ${server.server.address().port}`)
+    server.log.info(`Servidor rodando em http://0.0.0.0:${server.server.address().port}`)
   } catch (err) {
     server.log.error(err)
     process.exit(1)
