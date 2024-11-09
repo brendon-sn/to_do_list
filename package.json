@@ -13,7 +13,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@fastify/cors": "^7.0.0",
     "@neondatabase/serverless": "^0.10.3",
     "fastify": "^4.28.1",
     "postgres": "^3.4.5"
