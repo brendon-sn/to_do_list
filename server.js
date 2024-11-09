@@ -5,14 +5,12 @@ import cors from '@fastify/cors'
 const server = fastify()
 const database = new DatabasePostgres()
 
-server.register(cors, {
+await server.register(cors, {
     origin: ['https://front-to-do-list-psi.vercel.app/'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 })
-
-server.options('*', cors())
 
 server.post('/tasks', async (req, reply) => {
     const { name, cost, deadline } = req.body
