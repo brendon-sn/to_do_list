@@ -1,14 +1,15 @@
 import { fastify } from 'fastify'
 import { DatabasePostgres } from './db-postgres.js'
-import fastifyCors from '@fastify/cors' 
+import cors from '@fastify/cors' 
 
 const server = fastify()
 const database = new DatabasePostgres()
 
-server.register(fastifyCors, {
-    origin: ['https://front-to-do-list-psi.vercel.app'], 
+server.register(cors, {
+    origin: ['https://front-to-do-list-psi.vercel.app/'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-})
+    allowedHeaders: ['Content-Type', 'Authorization'],
+});
 
 server.post('/tasks', async (req, reply) => {
     const { name, cost, deadline } = req.body
