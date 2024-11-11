@@ -1,36 +1,30 @@
-// server.js
 import fastify from 'fastify'
 import { DatabasePostgres } from './db-postgres.js'
 
-// Cria uma instância do Fastify com logging ativado
 const server = fastify({
   logger: true,
 })
 
-// Inicializa a conexão com o banco de dados
 const database = new DatabasePostgres()
 
-// Middleware para adicionar cabeçalhos CORS manualmente em todas as respostas
 server.addHook('onSend', async (request, reply, payload) => {
-  reply.header('Access-Control-Allow-Origin', '*') // Permite todas as origens
-  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS') // Métodos permitidos
-  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization') // Cabeçalhos permitidos
-  reply.header('Access-Control-Allow-Credentials', 'true') // Permite credenciais
+  reply.header('Access-Control-Allow-Origin', '*')
+  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  reply.header('Access-Control-Allow-Credentials', 'true')
   return payload
 })
 
-// Lida com requisições OPTIONS para CORS preflight
 server.options('*', async (req, reply) => {
   reply
     .header('Access-Control-Allow-Origin', '*')
     .header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     .header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     .header('Access-Control-Allow-Credentials', 'true')
-    .status(204) // No Content
+    .status(204)
     .send()
 })
 
-// Define a rota para criar tarefas
 server.post('/tasks', async (req, reply) => {
   const { name, cost, deadline } = req.body
 
@@ -47,7 +41,6 @@ server.post('/tasks', async (req, reply) => {
   }
 })
 
-// Define a rota para listar tarefas
 server.get('/tasks', async (req, reply) => {
   const search = req.query.search || ''
   try {
@@ -59,7 +52,6 @@ server.get('/tasks', async (req, reply) => {
   }
 })
 
-// Define a rota para atualizar uma tarefa
 server.put('/tasks/:id', async (req, reply) => {
   const tasksId = req.params.id
   const { name, cost, deadline } = req.body
@@ -77,7 +69,6 @@ server.put('/tasks/:id', async (req, reply) => {
   }
 })
 
-// Define a rota para deletar uma tarefa
 server.delete('/tasks/:id', async (req, reply) => {
   const tasksId = req.params.id
 
@@ -90,7 +81,6 @@ server.delete('/tasks/:id', async (req, reply) => {
   }
 })
 
-// Função assíncrona para iniciar o servidor
 const start = async () => {
   try {
     await server.listen({
@@ -104,5 +94,4 @@ const start = async () => {
   }
 }
 
-// Inicia o servidor
 start()
