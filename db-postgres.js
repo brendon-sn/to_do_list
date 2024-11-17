@@ -30,8 +30,8 @@ export class DatabasePostgres {
     
         const numericCost = parseFloat(cost)
     
-        if (isNaN(numericCost)) {
-            throw new Error("Invalid cost value")
+        if (isNaN(numericCost) || numericCost < 0) {
+            throw new Error("Invalid cost value");
         }
     
         await sql 
