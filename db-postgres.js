@@ -162,7 +162,7 @@ async moveTaskDown(id) {
         SET order_tasks = order_tasks - 1
         WHERE order_tasks > ${deletedOrder}
     `
-}
+  }
 
   async delete(id) {
     await sql.begin(async (sql) => {
@@ -175,30 +175,30 @@ async moveTaskDown(id) {
 
         await this.reorderAfterDelete(taskToDelete.order_tasks, sql)
     })
-}
+  }
 
-async create(task) {
-    const tasksId = randomUUID()
-    const { name, cost, deadline } = task
-    
-    if (name.length > 140) {
-        throw new Error("The task name cannot be longer than 140 characters.")
-    }
-    
-    const numericCost = parseFloat(cost)
+  async create(task) {
+      const tasksId = randomUUID()
+      const { name, cost, deadline } = task
+      
+      if (name.length > 140) {
+          throw new Error("The task name cannot be longer than 140 characters.")
+      }
+      
+      const numericCost = parseFloat(cost)
 
-    if (isNaN(numericCost)) {
-        throw new Error("The cost value is invalid.")
-    }
-    if (numericCost < 0 || numericCost > 99999999) {
-        throw new Error("The cost must be between 0 and 99,999,999.")
-    }
+      if (isNaN(numericCost)) {
+          throw new Error("The cost value is invalid.")
+      }
+      if (numericCost < 0 || numericCost > 99999999) {
+          throw new Error("The cost must be between 0 and 99,999,999.")
+      }
 
-    await sql`
-        INSERT INTO tasks(id, name, cost, deadline, order_tasks)
-        SELECT ${tasksId}, ${name}, ${numericCost}, ${deadline}, 
-               COALESCE(MAX(order_tasks), 0) + 1
-        FROM tasks
-    `
-}
+      await sql`
+          INSERT INTO tasks(id, name, cost, deadline, order_tasks)
+          SELECT ${tasksId}, ${name}, ${numericCost}, ${deadline}, 
+                COALESCE(MAX(order_tasks), 0) + 1
+          FROM tasks
+      `
+  }
 }
