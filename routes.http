@@ -2,8 +2,8 @@ POST https://to-do-list-ppj7.onrender.com/tasks
 Content-type: application/json
 
 {
-    "name": "jkjkjkjkkj",
-    "cost": 3000,
+    "name": "Esta frase possui exatamente 141 caracteres, o que significa que ela ultrapassa o limite de 140 caracteres permitido para certos campos de entrada.",
+    "cost": 99999999,
     "deadline": "2022-03-27"
 }
 
@@ -16,17 +16,16 @@ GET https://to-do-list-ppj7.onrender.com/tasks
 ### 
 
 
-PUT https://to-do-list-ppj7.onrender.com/tasks/e9c791a2-9c76-4417-ba35-d5aa71fdb489
+PUT https://to-do-list-ppj7.onrender.com/tasks/284c7422-413b-4f98-b56c-c8d01c0d4da7
 Content-type: application/json
 
 {
     "name": "tarefa 02",
-    "cost": 11900,
+    "cost": 900,
     "deadline": "2024-10-19"
 }
 
 ### 
 
 
-DELETE https://to-do-list-ppj7.onrender.com/tasks/178998
-
+DELETE https://to-do-list-ppj7.onrender.com/tasks/284c7422-413b-4f98-b56c-c8d01c0d4da7
